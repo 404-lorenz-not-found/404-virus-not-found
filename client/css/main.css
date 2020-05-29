@@ -1,0 +1,70 @@
+main {
+	/*layout*/
+	text-align: center;
+}
+
+	button {
+		/*spacing*/
+		margin: 0 0 15px;
+
+		/*layout*/
+		padding: 1.2px;
+
+		/*design*/
+		border: 3.5px solid #9f9f9f;
+		border-radius: 7.5px;
+
+		/*button font settings*/
+		font-size: 1.5rem;
+		color: #f0f0f0;
+
+		/*animation*/
+		animation: buttonWidth 0.75s forwards;
+	}
+
+		button:hover {	
+			/*animation*/
+			animation: buttonWidthHover 0.75s forwards;
+		}
+
+			/*animation on leave/load*/
+			@keyframes buttonWidth {
+
+				0%{
+					/*layout*/
+					width: 27.5%;
+
+					/*background*/
+					background-color: #757575;
+				}
+
+				100%{
+					/*layout*/
+					width: 25%;
+
+					/*background*/
+					background-color: #303030;
+				}
+
+			}
+
+			/*animatio on hover*/
+			@keyframes buttonWidthHover {
+
+				0%{
+					/*layout*/
+					width: 25%;
+
+					/*background*/
+					background-color: #303030;
+				}
+
+				100%{
+					/*layout*/
+					width: 27.5%;
+
+					/*background*/
+					background-color: #757575;
+				}
+
+			}

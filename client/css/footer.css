@@ -1,0 +1,66 @@
+/*div as spacer to push footer to bottom*/
+.footerSpacer{
+	flex: 1;
+}
+
+footer {
+	/*layout*/
+	text-align: center;
+
+	/*background*/
+	background-color: #303030;
+}
+
+	.footerTitle {
+		/*spacing*/
+		margin: 7.5px;
+
+		/*footer title font settings*/
+		font-size: 2.5rem;
+		font-weight: 900;
+		font-weight: 700;
+	}
+
+		.footerTitle404{
+			/*footer title "404:" settings*/
+			color: #ff0000;
+
+			/*layout*/
+			vertical-align: middle;
+		}
+
+		.footerTitleV1ru5NotFound {
+			/*footer title " v1ru5 not found" settings*/
+			color: #ffffff;
+			font-size: 1.75rem;
+
+			/*layout*/
+			vertical-align: middle;
+		}
+
+	.requirementsNote {
+		/*spacing*/
+		margin: 10px;
+
+		/*font settings*/
+		color: #757575;
+	}
+
+	footer ul {
+		margin: 0;
+		padding: 0;
+	}
+
+		footer ul li {
+			display: inline-block;
+			margin: 2.5px 5px;
+		}
+
+			footer ul li a {
+				/*text-decoration: none;*/
+				color: #9f9f9f;
+			}
+
+	.yearNote {
+		color: #f0f0f0;
+	}
