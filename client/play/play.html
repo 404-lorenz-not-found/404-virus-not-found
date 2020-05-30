@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<title>404: v1ru5 not found</title>
+
+		<meta charset="utf-8">
+		<meta name="description" content="The 404: v1ru5 not found game">
+		<meta name="keywords" content="404, v1ru5, virus, not, found, game, browser, games, browsergames, multiplayer, simulation, eng, online, live, strategy">
+		<meta name="auther" content="David (@WoodDruid) & Lorenz (@404-lorenz-not-found) | (github.com/[@])">
+		<meta name=viewport content="width=device-width, initial-scale=1">
+		
+	</head>
+
+	<body>
+
+		<!-- css stylesheets: -->
+		<link rel="stylesheet" href="css/body.css">
+
+		<main>
+
+			<!-- css stylesheets: -->
+			<link rel="stylesheet" href="css/main.css">
+
+			<!-- container for waitingCustomGame -->
+			<div id="waitingCustomGameDiv" class="hidden">
+
+				<!-- "header" -->
+
+					<!-- waiting title -->
+					<p class="waitingCustomGameTitle"><span class="waitingCustomGameTitle404">404:</span><span class="waitingCustomGameTitleV1ru5NotFound"> v1ru5 not found</span></p>
+
+					<hr>
+
+				<!-- waitingCustomGame text -->
+				
+					<p class="waitingCustomGameWelcomeMsg">
+
+						Welcome <span id="waitingCustomGameNickname" class="waitingCustomGameNickname"></span>
+
+					</p>
+
+					<p class="waitingCustomGameNote">
+
+						Share this code to invite someone to join your game:<br>
+
+					</p>
+						
+					<p id="CustomGameId" class="CustomGameId">
+
+						generating...
+
+					</p>
+
+			</div>
+
+		</main>
+
+		<!-- socket.io -->
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="js/play.js"></script>
+
+	</body>
+
+</html>
