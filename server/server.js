@@ -22,9 +22,48 @@ const io = socketio(server);
 
 
 // "global" (all sockets) variables 
-let gameIds = [];
-let socketNicknames = [];
+	let gameIds = [];
+	// [[sock.id, nickname]]
+	let socketNicknames = []; 
+	// [[room, nr]]
+	let nrOfSocketsRoom = [];
+	// [[room, nr]]
+	let confirmedGameStart = [];
 
+function startGame(enterGameId) {
+
+	console.log("<game> started in room: ", enterGameId);
+
+	// get clientId in gam room
+	io.in(enterGameId).clients((err, clients) => {
+
+		if (err) {
+			console.error('<ERROR> ', err);
+		}
+
+		console.log("clients: ", clients);
+
+		// clientIds to nickname for play.js
+		let players = [];
+		
+		for (let i = 0; i < socketNicknames.length; i++) {
+
+			if (socketNicknames[i][0] == clients[0] || socketNicknames[i][0] == clients[1]) {
+
+				players.push(socketNicknames[i][1]);
+
+			}
+		
+		}
+
+		console.log("players: ", players);
+
+		// "send" confirm game start alert
+		io.in(enterGameId).emit('startGame', players, enterGameId);
+
+	});
+
+}
 
 // server connection event listener
 io.on('connection', (sock) => {
@@ -52,7 +91,7 @@ io.on('connection', (sock) => {
 		// go through loop until newCustomGameId is set
 		while (newCustomGameId == null) {
 
-			console.log("possibleId: ", possibleId);
+			console.log("<possibleId> ", possibleId);
 
 			// create idIsUsed to check wether possibleId is used alreade in gameIds after checking the gameIds array in the following loop
 			let idIsUsed = false;
@@ -92,6 +131,124 @@ io.on('connection', (sock) => {
 
 		// join sock to room
 		sock.join(newCustomGameId);
+
+		nrOfSocketsRoom.push([newCustomGameId, 1]);
+
+	});
+
+	// on sock send join method enterGameId and nickname => join room and start game
+	sock.on("enterGameId", (enterGameId, nickname) => {
+
+		// console.log(enterGameId, nickname);
+
+		// code validation variables
+		let validGameId = false;
+		let validRoom = false;
+
+		// check wether code is in gameIds
+		for (let i = 0; i < gameIds.length; i++) {
+
+			// if it is mark validGameId as true and break
+			if (gameIds[i] == enterGameId) {
+
+				validGameId = true;
+
+				break;
+
+			}
+		
+		}
+
+		// check wether room is full
+		for (let i = 0; i < nrOfSocketsRoom.length; i++) {
+
+			//  if not
+			if (nrOfSocketsRoom[i][0] == enterGameId && nrOfSocketsRoom[i][1] == 1) {
+
+				// "make room full"
+				nrOfSocketsRoom[i][1] = 2;
+
+				validRoom = true;
+
+				break;
+
+			}
+
+		}
+
+		// if code is valid join and "start" game
+		if (validGameId == true && validRoom == true) {
+
+			// push nickname (with sock.id) to socketNicknames
+			socketNicknames.push([sock.id, nickname]);
+
+			// join socket to room
+			sock.join(enterGameId);
+
+			startGame(enterGameId);
+
+		// else
+		} else if (validGameId == false || validRoom == false) {
+
+			sock.emit("roomFullInvalid", enterGameId);
+
+		}
+
+	});
+
+	sock.on('confirmStart', (gameId) => {
+
+		// console.log(gameId);
+
+		let gameIsInConfirmedStartArray = false;
+
+		// go through confirmedGameStart to check wether game room was already added
+		for (var i = 0; i < confirmedGameStart.length; i++) {
+
+			// it was added gameIsInConfirmedStartArray = true to skip adding in following if statement
+			if (confirmedGameStart[i][0] == gameId) {
+
+				gameIsInConfirmedStartArray = true;
+
+				break;
+
+			}
+		}
+
+		// it game room wasnt added already, add it to gameIsInConfirmedStartArray
+		if (gameIsInConfirmedStartArray == false) {
+
+			confirmedGameStart.push([gameId, 0]);
+
+		}
+
+		let confirmed = false;
+
+		// console.log("<confirmed> false = ", confirmed)
+
+		// confirmed = true if second client confirmes otherwise save first confirmation
+		for (var i = 0; i < confirmedGameStart.length; i++) {
+			if (confirmedGameStart[i][0] == gameId && confirmedGameStart[i][1] == 0) {
+
+				confirmedGameStart[i][1] = 1;
+
+			} else if (confirmedGameStart[i][0] == gameId && confirmedGameStart[i][1] == 1) {
+
+				confirmedGameStart[i][1] = 2;
+
+				confirmed = true;
+
+				console.log("<confirmed> ", confirmed)
+
+			}
+		}
+
+		// if borth clients conirmed send showGame to both clients to start game
+		if (confirmed == true) {
+
+			io.in(gameId).emit('showGame');
+
+		}
 
 	});
 

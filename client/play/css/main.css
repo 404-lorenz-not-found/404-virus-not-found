@@ -79,6 +79,57 @@ main {
 			text-decoration-color: #ffffff;
 		}
 
+	.waitingCustomGameQuitLink {
+		/*spacing*/
+		margin: 45px 0 15px 0;
+	}
+
+		.waitingCustomGameQuitLink a {
+			/*quit font settings*/
+			font-size: 1.625rem;
+			color: #9f9f9f;
+		}
+
+	.waitingEnterGameP {
+		/*spacing*/
+		margin: 45px;
+
+		/*title font settings*/
+		font-size: 3rem;
+		color: #ff0000;
+	}
+
+	.waitingEnterGameQuitLink {
+		/*spacing*/
+		margin: 45px 0 15px 0;
+	}
+
+		.waitingEnterGameQuitLink a {
+			/*quit font settings*/
+			font-size: 1.625rem;
+			color: #9f9f9f;
+		}
+
+	.waitingForOpponentP {
+		/*spacing*/
+		margin: 45px;
+
+		/*title font settings*/
+		font-size: 3rem;
+		color: #ff0000;
+	}
+
+	.waitingForOpponentQuitLink {
+		/*spacing*/
+		margin: 45px 0 15px 0;
+	}
+
+		.waitingForOpponentQuitLink a {
+			/*quit font settings*/
+			font-size: 1.625rem;
+			color: #9f9f9f;
+		}
+
 	.hidden {
 		display: none;
 	}
