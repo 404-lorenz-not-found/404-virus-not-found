@@ -3,6 +3,7 @@
 	flex: 1;
 }
 
+
 footer {
 	/*layout*/
 	text-align: center;
@@ -10,6 +11,7 @@ footer {
 	/*background*/
 	background-color: #303030;
 }
+
 
 	.footerTitle {
 		/*spacing*/
@@ -38,6 +40,7 @@ footer {
 			vertical-align: middle;
 		}
 
+
 	.requirementsNote {
 		/*spacing*/
 		margin: 10px;
@@ -45,6 +48,7 @@ footer {
 		/*font settings*/
 		color: #757575;
 	}
+
 
 	footer ul {
 		margin: 0;
@@ -60,6 +64,7 @@ footer {
 				/*text-decoration: none;*/
 				color: #9f9f9f;
 			}
+
 
 	.yearNote {
 		color: #f0f0f0;

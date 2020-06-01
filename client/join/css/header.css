@@ -3,6 +3,7 @@ header{
 	text-align: center;
 }
 
+
 	header p {
 		/*spacing*/
 		margin: 15px;
@@ -29,6 +30,7 @@ header{
 			/*layout*/
 			vertical-align: middle;
 		}
+
 
 	header hr {
 		/*spacing/layout*/
