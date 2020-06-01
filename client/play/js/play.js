@@ -214,5 +214,5 @@ sock.on('showGame', () => {
 
 	// show gameContainer
 	document.querySelector('#gameContainer').className = "gameContainer";
-	
+
 });

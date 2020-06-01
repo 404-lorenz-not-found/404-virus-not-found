@@ -1,7 +1,8 @@
 // importing modules
-const http = require('http');
-const express = require('express');
-const socketio = require('socket.io');
+	const http = require('http');
+	const express = require('express');
+	const socketio = require('socket.io');
+
 
 // on connection
 const app = express();
@@ -30,6 +31,7 @@ const io = socketio(server);
 	// [[room, nr]]
 	let confirmedGameStart = [];
 
+
 function startGame(enterGameId) {
 
 	console.log("<game> started in room: ", enterGameId);
@@ -45,7 +47,7 @@ function startGame(enterGameId) {
 
 		// clientIds to nickname for play.js
 		let players = [];
-		
+
 		for (let i = 0; i < socketNicknames.length; i++) {
 
 			if (socketNicknames[i][0] == clients[0] || socketNicknames[i][0] == clients[1]) {
@@ -53,7 +55,7 @@ function startGame(enterGameId) {
 				players.push(socketNicknames[i][1]);
 
 			}
-		
+
 		}
 
 		console.log("players: ", players);
@@ -64,6 +66,7 @@ function startGame(enterGameId) {
 	});
 
 }
+
 
 // server connection event listener
 io.on('connection', (sock) => {
@@ -136,6 +139,7 @@ io.on('connection', (sock) => {
 
 	});
 
+
 	// on sock send join method enterGameId and nickname => join room and start game
 	sock.on("enterGameId", (enterGameId, nickname) => {
 
@@ -196,6 +200,7 @@ io.on('connection', (sock) => {
 
 	});
 
+
 	sock.on('confirmStart', (gameId) => {
 
 		// console.log(gameId);
@@ -252,13 +257,14 @@ io.on('connection', (sock) => {
 
 	});
 
-
 });
+
 
 // server error event listener
 server.on('error', (err) => {
 	console.error('<ERROR> ', err);
 });
+
 
 // server listener
 server.listen(80, () => {
