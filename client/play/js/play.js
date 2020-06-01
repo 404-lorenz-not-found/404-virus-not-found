@@ -1,6 +1,7 @@
 // connection to socket.io server
 const sock = io();
 
+
 function getNickname(queries) {
 
 	// loop through quieries
@@ -17,6 +18,7 @@ function getNickname(queries) {
 			// console.log("<nickname> from queryString: ", nickname)
 
 			break;
+
 		}
 
 	}
@@ -40,6 +42,7 @@ function getNickname(queries) {
 
 }
 
+
 function getGameId(queries, enterGameId) {
 
 	// loop through quieries
@@ -54,6 +57,7 @@ function getGameId(queries, enterGameId) {
 			enterGameId = possibleGameIdQuery[1];
 
 			break;
+
 		}
 
 	}
@@ -80,12 +84,16 @@ function getGameId(queries, enterGameId) {
 
 }
 
+
 // check join method
 function getMethod() {
+
 	// parse queryString
-	let queryString = decodeURIComponent(window.location.search);
-	queryString = queryString.substring(1);
-	const queries = queryString.split("&");
+
+		let queryString = decodeURIComponent(window.location.search);
+		queryString = queryString.substring(1);
+
+		const queries = queryString.split("&");
 
 	// get join method
 	const methodQuery = queries[0].split("=");
@@ -133,37 +141,38 @@ function getMethod() {
 
 }
 
+
 // variables
-let nickname = "";
-let opponent = "";
-let gameId = "";
+	let nickname = "";
+	let opponent = "";
+	let gameId = "";
+
 
 // check join method
 getMethod();
 
-// write newCustomGameId
-function writeNewCustomId(newCustomGameId) {
+
+// on server send newCustomGameId write newCustomGameId
+sock.on('newCustomGameId', (newCustomGameId) => {
 
 	// console.log("newCustomGameId: ", newCustomGameId);
 
 	// write newCustomGameId
 	document.querySelector('#CustomGameId').innerHTML = newCustomGameId;
 
-}
+});
 
-// on server send newCustomGameId
-sock.on('newCustomGameId', writeNewCustomId);
 
-function roomFullInvalid(invalidCode) {
+// on server send code invalid
+sock.on('roomFullInvalid', (invalidCode) => {
 
 	alert("Sorry, the game with the chosen code '" + invalidCode + "' either does not exist or is full.");
 
 	// send back to join page
 	window.open("../../join/join.html", "_self");
-}
 
-// on server send code invalid
-sock.on('roomFullInvalid', roomFullInvalid)
+});
+
 
 sock.on('startGame', (players, gameId) => {
 
@@ -197,10 +206,13 @@ sock.on('startGame', (players, gameId) => {
 
 });
 
+
 sock.on('showGame', () => {
+
 	// hide waitingForOpponentDiv
 	document.querySelector('#waitingForOpponentDiv').className = "hidden";
 
 	// show gameContainer
 	document.querySelector('#gameContainer').className = "gameContainer";
+
 });

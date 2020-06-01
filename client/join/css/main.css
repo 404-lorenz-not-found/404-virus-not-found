@@ -3,6 +3,7 @@ main {
 	text-align: center;
 }
 
+
 	button {
 		/*spacing*/
 		margin: 0 0 15px;
@@ -27,6 +28,7 @@ main {
 			animation: buttonWidthHover 0.75s forwards;
 		}
 
+
 			/*animation on leave/load*/
 			@keyframes buttonWidth {
 
@@ -47,6 +49,7 @@ main {
 				}
 
 			}
+
 
 			/*animatio on hover*/
 			@keyframes buttonWidthHover {
