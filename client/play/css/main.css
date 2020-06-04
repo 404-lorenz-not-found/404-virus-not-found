@@ -1,0 +1,150 @@
+main {
+	/*layout*/
+	text-align: center;
+
+	/*standard font settings*/
+	color: #ffffff;
+}
+
+
+	/*-waitingCustomGameDiv*/
+		.waitingCustomGameTitle {
+			/*spacing*/
+			margin: 15px;
+
+			/*title font settings*/
+			font-size: 5rem;
+			color: #ffffff;
+			font-weight: 900;
+		}
+
+			.waitingCustomGameTitle404{
+				/*title "404: settings*/
+				color: #ff0000;
+
+				/*layout*/
+				vertical-align: middle;
+			}
+
+			.waitingCustomGameTitleV1ru5NotFound {
+				/*title " v1ru5 not found" settings*/
+				font-size: 3.5rem;
+				font-weight: 700;
+
+				/*layout*/
+				vertical-align: middle;
+			}
+
+
+		.waitingCustomGameDiv hr {
+			/*spacing/layout*/
+			margin: 15px auto 15px auto;
+
+			/*layout/design*/
+			width: 66.6%;
+
+			/*design*/
+			border: 2.5px solid #ffffff;
+			border-radius: 90px;
+		}
+
+
+		.waitingCustomGameWelcomeMsg {
+			/*spacing*/
+			margin: 30px 0 15px 0;
+
+			/*welcome msg font settings*/
+			font-size: 2.25rem;
+		}
+
+			.waitingCustomGameNickname {
+				/*nickname title "404: settings*/
+				color: #ff0000;
+			}
+
+
+		.waitingCustomGameNote {
+			/*spacing*/
+			margin: 0 0 15px;
+
+			/*note font settings*/
+			font-size: 1.5rem;
+		}
+
+
+		.CustomGameId {
+			/*spacing*/
+			margin: 0 0 15px;
+
+			/*note font settings*/
+			font-size: 3rem;
+			color: #ff0000;
+
+			/*code decoration*/
+			text-decoration: underline;
+			text-decoration-color: #ffffff;
+		}
+
+
+		.waitingCustomGameQuitLink {
+			/*spacing*/
+			margin: 45px 0 15px 0;
+		}
+
+			.waitingCustomGameQuitLink a {
+				/*quit font settings*/
+				font-size: 1.625rem;
+				color: #9f9f9f;
+			}
+
+
+	/*.waitingEnterGameDiv*/
+		.waitingEnterGameP {
+			/*spacing*/
+			margin: 45px;
+
+			/*title font settings*/
+			font-size: 3rem;
+			color: #ff0000;
+		}
+
+
+		.waitingEnterGameQuitLink {
+			/*spacing*/
+			margin: 45px 0 15px 0;
+		}
+
+			.waitingEnterGameQuitLink a {
+				/*quit font settings*/
+				font-size: 1.625rem;
+				color: #9f9f9f;
+			}
+
+
+	/*.waitingForOpponent*/
+		.waitingForOpponentP {
+			/*spacing*/
+			margin: 45px;
+
+			/*title font settings*/
+			font-size: 3rem;
+			color: #ff0000;
+		}
+
+
+		.waitingForOpponentQuitLink {
+			/*spacing*/
+			margin: 45px 0 15px 0;
+		}
+
+			.waitingForOpponentQuitLink a {
+				/*quit font settings*/
+				font-size: 1.625rem;
+				color: #9f9f9f;
+			}
+
+
+	/* hidden divs */
+		.hidden {
+			display: none;
+		}
