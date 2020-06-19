@@ -144,6 +144,51 @@ main {
 			}
 
 
+	.gameContainer {
+		display: grid;
+
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-rows: auto 1fr;
+		grid-template-areas:
+		 "playerInfo timePlayed ticksCalculated opponentPlayerInfo"
+		 "gameCanvas gameCanvas gameCanvas gameCanvas";
+
+		line-height: 0px;
+	}
+
+		.playerInfo {
+			grid-area: playerInfo;
+
+			margin: 0;
+			padding: 20px;
+		}
+
+		.timePlayed {
+			grid-area: timePlayed;
+
+			margin: 0;
+			padding: 20px;
+		}
+
+		.ticksCalculated {
+			grid-area: ticksCalculated;
+
+			margin: 0;
+			padding: 20px;
+		}
+
+		.opponentPlayerInfo {
+			grid-area: opponentPlayerInfo;
+
+			margin: 0;
+			padding: 20px;
+		}
+
+		.gameCanvas {
+			grid-area: gameCanvas;
+		}
+
+
 	/* hidden divs */
 		.hidden {
 			display: none;
