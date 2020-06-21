@@ -174,7 +174,7 @@ sock.on('roomFullInvalid', (invalidCode) => {
 });
 
 
-sock.on('startGame', (players, gameId) => {
+sock.on('confirmAlert', (players, gameId) => {
 
 	// console.log(players);
 
@@ -202,7 +202,7 @@ sock.on('startGame', (players, gameId) => {
 
 	// console.log('<game start> confirmation sent');
 
-	sock.emit('confirmStart', gameId);
+	sock.emit('startGame', gameId);
 
 });
 
