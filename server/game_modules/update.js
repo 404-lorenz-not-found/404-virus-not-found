@@ -1,3 +1,7 @@
+// import modules
+	const generateInitialGameState = require('./generateInitialGameState');
+
+
 // updateFood
 	// updates the food for a given game
 	// 
@@ -7,7 +11,7 @@
 	// dimensions = dimensions of the "canvas" wherefor the game is calculated
 	function updateFood (gameId, gameData, dimensions) {
 
-		// [[coordX, coordY, velX, velY], ...]
+		// [[coordX, coordY, velX, velY, food(0)/waste(1)], ...]
 		let newFood = [];
 
 		// go through gameData[] to get current food[] (oldFood[])
@@ -39,13 +43,38 @@
 								}
 
 
+							// "blood disappear system"
+								let foodType = oldFood[i][4];
+
+								let foodElement = [coordX, coordY, newVelX, newVelY, foodType];
+
+								let wasteDisappearChance = 0.025;
+
+								// check if food[] element is "free" and waste
+									let isFree = true;
+
+									// isFree check missing
+
+									// if "free" and waste
+										if (isFree && foodType == 1) {
+											let disappearChance = Math.random();
+
+											if (disappearChance < wasteDisappearChance) {
+
+												foodElement = generateInitialGameState.generateFoodElement(dimensions);
+
+											}
+
+										}
+
+
 							// add newly calculated food element to newFood[]
-							newFood.push([coordX, coordY, newVelX, newVelY])
+								newFood.push(foodElement)
 
 						}
 
 
-					// replaye old food data with new food data
+					// overwrite old food data with new food data
 						gameData[i][2] = newFood;
 
 				}
