@@ -3,6 +3,8 @@
 	// 
 	// Parameters:
 	// velocityHelper = max velocity (above 0) + max velocity (below 0) + 1 (0)
+	// 
+	// return = velocity
 	function generateRandomFoodVel(velocityHelper) {
 		return Math.floor(Math.random() * (velocityHelper - 1 + 1) + 1);
 	}
@@ -102,6 +104,8 @@
 
 						// set generated food
 							gameData[i][2] = generateFood(dimensions);
+
+						break;
 
 					}
 

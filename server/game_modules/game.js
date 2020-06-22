@@ -94,6 +94,8 @@
 							// add ticks to update to client tick counter
 								gameData[i][1][2] += ticksToDo;
 
+							break;
+
 						}
 
 					}
@@ -116,6 +118,8 @@
 					io.in(gameId).emit('updateGame', gameData[i]);
 
 					console.log('<updateGame> updated game ' + gameId + ' by ' + ticksToDo + ' tick(s)');
+
+					break;
 
 				}
 

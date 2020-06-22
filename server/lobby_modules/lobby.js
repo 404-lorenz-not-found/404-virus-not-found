@@ -27,7 +27,7 @@
 // generateGameId
 	// generates a random gameId
 	// 
-	// Returns = gameId
+	// return = gameId
 	function generateGameId() {
 		return Math.random().toString().slice(2, 10);
 	}
@@ -243,6 +243,8 @@
 
 						console.log('<startGame> first client conirmed game start in room: ' + gameId)
 
+						break;
+
 
 					} else if (confirmedGameStarts[i][0] == gameId && confirmedGameStarts[i][1] == 1) {
 
@@ -251,6 +253,8 @@
 						confirmed = true;
 
 						console.log('<startGame> second client conirmed game start in room: ' + gameId)
+
+						break;
 
 					}
 
