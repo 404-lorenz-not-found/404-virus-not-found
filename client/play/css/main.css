@@ -8,47 +8,6 @@ main {
 
 
 	/*-waitingCustomGameDiv*/
-		.waitingCustomGameTitle {
-			/*spacing*/
-			margin: 15px;
-
-			/*title font settings*/
-			font-size: 5rem;
-			color: #ffffff;
-			font-weight: 900;
-		}
-
-			.waitingCustomGameTitle404{
-				/*title "404: settings*/
-				color: #ff0000;
-
-				/*layout*/
-				vertical-align: middle;
-			}
-
-			.waitingCustomGameTitleV1ru5NotFound {
-				/*title " v1ru5 not found" settings*/
-				font-size: 3.5rem;
-				font-weight: 700;
-
-				/*layout*/
-				vertical-align: middle;
-			}
-
-
-		.waitingCustomGameDiv hr {
-			/*spacing/layout*/
-			margin: 15px auto 15px auto;
-
-			/*layout/design*/
-			width: 66.6%;
-
-			/*design*/
-			border: 2.5px solid #ffffff;
-			border-radius: 90px;
-		}
-
-
 		.waitingCustomGameWelcomeMsg {
 			/*spacing*/
 			margin: 30px 0 15px 0;
@@ -142,6 +101,51 @@ main {
 				font-size: 1.625rem;
 				color: #9f9f9f;
 			}
+
+
+	.gameContainer {
+		display: grid;
+
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-rows: auto 1fr;
+		grid-template-areas:
+		 "playerInfo timePlayed ticksCalculated opponentPlayerInfo"
+		 "gameCanvas gameCanvas gameCanvas gameCanvas";
+
+		line-height: 0px;
+	}
+
+		.playerInfo {
+			grid-area: playerInfo;
+
+			margin: 0;
+			padding: 20px;
+		}
+
+		.timePlayed {
+			grid-area: timePlayed;
+
+			margin: 0;
+			padding: 20px;
+		}
+
+		.ticksCalculated {
+			grid-area: ticksCalculated;
+
+			margin: 0;
+			padding: 20px;
+		}
+
+		.opponentPlayerInfo {
+			grid-area: opponentPlayerInfo;
+
+			margin: 0;
+			padding: 20px;
+		}
+
+		.gameCanvas {
+			grid-area: gameCanvas;
+		}
 
 
 	/* hidden divs */
