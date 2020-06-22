@@ -3,6 +3,7 @@
 
 // game Colors
 	const foodColor = '#FF0000'
+	const wasteColor = '#666666'
 
 
 // drawFood
@@ -21,7 +22,16 @@
 					// "sets" coordinates of food[] element by callculating ist coordinates from coordinates of food[] according to the clients canvas size
 						ctx.arc(food[i][0]/1920*ctx.canvas.width, food[i][1]/1080*ctx.canvas.height, 5/1920*ctx.canvas.width, 0, 2 * Math.PI, false);
 
-					ctx.fillStyle = foodColor;
+					// check for food or waste
+						if (food[i][4] == 0) {
+
+							ctx.fillStyle = foodColor;
+
+						} else if (food[i][4] == 1) {
+
+							ctx.fillStyle = wasteColor;
+
+						}
 
 					ctx.fill();
 

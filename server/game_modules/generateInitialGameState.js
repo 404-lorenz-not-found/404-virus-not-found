@@ -10,6 +10,63 @@
 	}
 
 
+// generateFoodElement
+	// generates a food element
+	// 
+	// Parameters:
+	// dimensions = dimensions of the "canvas" wherefor the game is calculated
+	// 
+	// return = food[] element
+	function generateFoodElement(dimensions) {
+
+		// settings variables
+			// max velocity (positive and negative)
+				let maxVel = 3; // not sure how flaots are handled; getting confused; ~ Lorenz
+
+				// account for positive and negative and no velocity
+					let velocityHelper = maxVel * 2 + 1
+
+
+		let possibleNewFoodElement = [
+									  Math.floor(Math.random() * (dimensions[1] - dimensions[0] + 1) + dimensions[0]), // generate random x-coordinate
+									  Math.floor(Math.random() * (dimensions[3] - dimensions[2] + 1) + dimensions[2]), // generate random y-coordinate
+									  generateRandomFoodVel(velocityHelper),
+									  generateRandomFoodVel(velocityHelper),
+									  0
+									 ]
+
+
+		// if velocity is 0 for x and y generate new velocities untli they are not both 0
+			while (possibleNewFoodElement[2] == velocityHelper && possibleNewFoodElement[3] == velocityHelper) {
+
+				possibleNewFoodElement[2] = generateRandomFoodVel(velocityHelper);
+				possibleNewFoodElement[3] = generateRandomFoodVel(velocityHelper);
+
+			}
+
+
+		// adjust velocities to account for negative or 0 velocity
+			// if velocity is bigger than maxVel substract velocityHelper to get 0 or corresponding negative velocity
+				// x
+					if (possibleNewFoodElement[2] > maxVel) {
+
+						possibleNewFoodElement[2] -= velocityHelper;
+
+					}
+
+				// y
+					if (possibleNewFoodElement[3] > maxVel) {
+
+						possibleNewFoodElement[3] -= velocityHelper;
+
+					}
+
+
+		return possibleNewFoodElement;
+
+	}
+
+
 // generateFood
 	// generates food for the game beginning
 	// 
@@ -21,55 +78,16 @@
 			// number of food at start
 				const foodCount = 250;
 
-			// max velocity (positive and negative)
-				let maxVel = 3; // not sure how flaots are handled; getting confused; ~ Lorenz
-
-				// account for positive and negative and no velocity
-					let velocityHelper = maxVel * 2 + 1
 
 		// generate food
-			// [x, y, x-vel, y-vel]
+			// [x, y, x-vel, y-vel, food(0)/waste(1)]
 			let food = [];
 
 			// for each food populate food[]
-				for (let i = 0; i < foodCount; i++){
-
-					// generate food element data set
-						let possibleNewFoodElement = [
-													  Math.floor(Math.random() * (dimensions[1] - dimensions[0] + 1) + dimensions[0]), // generate random x-coordinate
-													  Math.floor(Math.random() * (dimensions[3] - dimensions[2] + 1) + dimensions[2]), // generate random y-coordinate
-													  generateRandomFoodVel(velocityHelper),
-													  generateRandomFoodVel(velocityHelper)
-													 ]
-
-
-					// if velocity is 0 for x and y generate new velocities untli they are not both 0
-						while (possibleNewFoodElement[2] == velocityHelper && possibleNewFoodElement[3] == velocityHelper) {
-
-							possibleNewFoodElement[2] = generateRandomFoodVel(velocityHelper);
-							possibleNewFoodElement[3] = generateRandomFoodVel(velocityHelper);
-
-						}
-
-
-					// adjust velocities to account for negative or 0 velocity
-						// if velocity is bigger than maxVel substract velocityHelper to get 0 or corresponding negative velocity
-							// x
-								if (possibleNewFoodElement[2] > maxVel) {
-
-									possibleNewFoodElement[2] -= velocityHelper;
-
-								}
-
-							// y
-								if (possibleNewFoodElement[3] > maxVel) {
-
-									possibleNewFoodElement[3] -= velocityHelper;
-
-								}
+				for (let i = 0; i < foodCount; i++) {
 
 					// add new generated food element to food[]
-						food.push(possibleNewFoodElement);
+						food.push(generateFoodElement(dimensions));
 
 				}
 
@@ -116,5 +134,6 @@
 
 // exporting modules
 	module.exports = {
-		generateInitialGameState: generateInitialGameState
+		generateInitialGameState: generateInitialGameState,
+		generateFoodElement: generateFoodElement
 	};
