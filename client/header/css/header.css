@@ -14,6 +14,12 @@ header{
 		font-weight: 900;
 	}
 
+		a {
+			/* link font settings */
+			color: #ffffff;
+			text-decoration: none;
+		}
+
 		.mainTitle404{
 			/*main title "404: settings*/
 			color: #ff0000;
@@ -30,7 +36,7 @@ header{
 			/*layout*/
 			vertical-align: middle;
 		}
-		
+
 
 	header hr {
 		/*spacing/layout*/

@@ -1,23 +1,4 @@
-<!DOCTYPE html>
-
-<html>
-
-	<head>
-
-		<title>404: v1ru5 not found</title>
-
-		<meta charset="utf-8">
-		<meta name="description" content="The 404: v1ru5 not found game">
-		<meta name="keywords" content="404, v1ru5, virus, not, found, game, browser, games, browsergames, multiplayer, simulation, eng, online, live, strategy">
-		<meta name="auther" content="David (@WoodDruid) & Lorenz (@404-lorenz-not-found) | (github.com/[@])">
-		<meta name=viewport content="width=device-width, initial-scale=1">
-		
-	</head>
-
-	<body>
-
-		<!-- css stylesheets: -->
-		<link rel="stylesheet" href="css/body.css">
+<script src="/head/head.js"></script>
 
 
 		<main>
@@ -29,18 +10,13 @@
 			<!-- container for waitingCustomGame -->
 			<div id="waitingCustomGameDiv" class="hidden">
 
-				<!-- "header" -->
-
-					<!-- waiting title -->
-					<p class="waitingCustomGameTitle"><span class="waitingCustomGameTitle404">404:</span><span class="waitingCustomGameTitleV1ru5NotFound"> v1ru5 not found</span></p>
-
-					<hr>
+				<script src="/header/header.js"></script>
 
 				<!-- waitingCustomGame text -->
-				
+
 					<p class="waitingCustomGameWelcomeMsg">
 
-						Welcome <span id="waitingCustomGameNickname" class="waitingCustomGameNickname"></span>
+						Welcome <span id="waitingCustomGameNickname" class="waitingCustomGameNickname">Guest</span>
 
 					</p>
 
@@ -49,7 +25,7 @@
 						Share this code to invite someone to join your game:<br>
 
 					</p>
-						
+
 					<p id="CustomGameId" class="CustomGameId">
 
 						generating...
@@ -63,7 +39,9 @@
 
 			<!-- container for waitingEnterGame -->
 			<div id="waitingEnterGameDiv" class="hidden">
-						
+
+				<script src="/header/header.js"></script>
+
 				<p id="waitingEnterGameP" class="waitingEnterGameP">
 
 					connecting...
@@ -77,7 +55,9 @@
 
 			<!-- container for waitingForOpponent -->
 			<div id="waitingForOpponentDiv" class="hidden">
-						
+
+				<script src="/header/header.js"></script>
+
 				<p id="waitingForOpponentP" class="waitingForOpponentP">
 
 					waiting for opponent to confirm game start...
@@ -91,17 +71,41 @@
 
 			<!-- gameContainer -->
 			<div id="gameContainer" class="hidden">
-						
-				The 404: v1ru5 not found game.
+
+				<p class="playerInfo" id="playerInfo">
+
+					<span id="playerInfoNickname">Nickname</span> | <span id="playerInfoPoints">0000</span>
+
+				</p>
+
+				<p class="timePlayed">
+
+					Time played: <span id="timePlayed">00:00:00</span>
+
+				</p>
+
+				<p class="ticksCalculated">
+
+					Ticks calculated: <span id="ticksCalculated">0</span>
+
+				</p>
+
+				<p class="OpponentPlayerInfo">
+
+					<span id="OpponentPlayerInfoPoints">0000</span> | <span id="OpponentPlayerInfoNickname">Nickname</span> 
+
+				</p>
+
+				<div class="gameCanvas"><canvas id="gameCanvas" width="0" height="10">Your browser seems to not support the html canvas.</canvas></div>
 
 			</div>
 
 		</main>
-		
+
 
 		<!-- socket.io -->
 		<script src="/socket.io/socket.io.js"></script>
-		<script src="js/play.js"></script>
+		<script type="module" src="js/play.js"></script>
 
 	</body>
 

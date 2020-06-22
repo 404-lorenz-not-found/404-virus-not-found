@@ -1,0 +1,25 @@
+main {
+	/*spacing*/
+	margin: 0 auto;
+
+	/*layout*/
+	width: 66.6%;
+
+	/*main font settings*/
+	color: #ffffff;
+}
+
+	h2 {
+		/*spacing*/
+		margin: 0;
+
+		/*"impressum" font settings*/
+		font-size: 2.5rem;
+		text-decoration-line: underline;
+		text-decoration-color: #ff0000;
+	}
+
+	.impressum {
+		/*spacing*/
+		margin: 15px 0;
+	}
