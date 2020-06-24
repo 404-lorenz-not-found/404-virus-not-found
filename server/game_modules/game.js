@@ -14,6 +14,7 @@
 	//    ticksCalculated
 	//   ]
 	//   ["food"]
+	//   ["cells"]
 	//  ]
 	// ]
 	let gameData = [];
@@ -106,6 +107,7 @@
 
 				// call each game updater for each part of the game
 					update.updateFood(gameId, gameData, dimensions);
+					update.updateCells(gameId, gameData);
 
 			}
 

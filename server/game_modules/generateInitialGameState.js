@@ -32,12 +32,13 @@
 									  Math.floor(Math.random() * (dimensions[3] - dimensions[2] + 1) + dimensions[2]), // generate random y-coordinate
 									  generateRandomFoodVel(velocityHelper),
 									  generateRandomFoodVel(velocityHelper),
-									  0
+									  0,
+									  'free'
 									 ]
 
 
-		// if velocity is 0 for x and y generate new velocities untli they are not both 0
-			while (possibleNewFoodElement[2] == velocityHelper && possibleNewFoodElement[3] == velocityHelper) {
+		// if velocity is 0 for x or y generate new velocities until they both are not 0
+			while (possibleNewFoodElement[2] == velocityHelper || possibleNewFoodElement[3] == velocityHelper) {
 
 				possibleNewFoodElement[2] = generateRandomFoodVel(velocityHelper);
 				possibleNewFoodElement[3] = generateRandomFoodVel(velocityHelper);
@@ -72,15 +73,17 @@
 	// 
 	// Parameters:
 	// dimensions = dimensions of the "canvas" wherefor the game is calculated
+	// 
+	// return = food[]
 	function generateFood(dimensions) {
 
 		// settings variables
 			// number of food at start
-				const foodCount = 250;
+				const foodCount = 150;
 
 
 		// generate food
-			// [x, y, x-vel, y-vel, food(0)/waste(1)]
+			// [x, y, x-vel, y-vel, food(0)/waste(1), 'free'/cellId]
 			let food = [];
 
 			// for each food populate food[]
@@ -92,6 +95,56 @@
 				}
 
 		return food;
+
+	}
+
+
+// generateCell
+	// generates cells[] element for the game beginning
+	// 
+	// Parameters:
+	// id = id for cell to generate
+	// 
+	// return = cell[]
+	function generateCell(id) {
+
+		// settings variables
+			const wallHealth = 100;
+			const cellEnergy = 75;
+
+
+		let cell = [id, wallHealth, cellEnergy, 0, []];
+
+
+		return cell;
+
+	}
+
+
+// generateCells
+	// generates cells for the game beginning
+	// 
+	// return = food[]
+	function generateCells() {
+
+		// settings variables
+			// number of cells at start
+				const cellCount = 27;
+
+
+		// generate cells
+			// [[id/'dead', wallHealth, cellEnergy, pointerPos, ["DNA"]], ...]
+			let cells = [];
+
+			// for each cell populate cells[]
+				for (let i = 0; i < cellCount; i++) {
+
+					// add new generated cell[] to cells[]
+						cells.push(generateCell(i));
+
+				}
+
+		return cells;
 
 	}
 
@@ -120,8 +173,12 @@
 						// set tick info
 							gameData[i][1] = [Date.now(), 0, 0];
 
-						// set generated food
-							gameData[i][2] = generateFood(dimensions);
+						// set game
+							// set generated food
+								gameData[i][2] = generateFood(dimensions);
+
+							// set generated cells
+								gameData[i][3] = generateCells();
 
 						break;
 
