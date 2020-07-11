@@ -32,12 +32,13 @@
 									  Math.floor(Math.random() * (dimensions[3] - dimensions[2] + 1) + dimensions[2]), // generate random y-coordinate
 									  generateRandomFoodVel(velocityHelper),
 									  generateRandomFoodVel(velocityHelper),
-									  0
+									  0,
+									  'free'
 									 ]
 
 
-		// if velocity is 0 for x and y generate new velocities untli they are not both 0
-			while (possibleNewFoodElement[2] == velocityHelper && possibleNewFoodElement[3] == velocityHelper) {
+		// if velocity is 0 for x or y generate new velocities until they both are not 0
+			while (possibleNewFoodElement[2] == velocityHelper || possibleNewFoodElement[3] == velocityHelper) {
 
 				possibleNewFoodElement[2] = generateRandomFoodVel(velocityHelper);
 				possibleNewFoodElement[3] = generateRandomFoodVel(velocityHelper);
@@ -72,15 +73,17 @@
 	// 
 	// Parameters:
 	// dimensions = dimensions of the "canvas" wherefor the game is calculated
+	// 
+	// return = food[]
 	function generateFood(dimensions) {
 
 		// settings variables
 			// number of food at start
-				const foodCount = 250;
+				const foodCount = 150;
 
 
 		// generate food
-			// [x, y, x-vel, y-vel, food(0)/waste(1)]
+			// [x, y, x-vel, y-vel, food(0)/waste(1), 'free'/cellId]
 			let food = [];
 
 			// for each food populate food[]
@@ -96,6 +99,80 @@
 	}
 
 
+// generateCell
+	// generates cells[] element for the game beginning
+	// 
+	// Parameters:
+	// id = id for cell to generate
+	// 
+	// return = cell[]
+	function generateCell(id) {
+
+		// settings variables
+			const wallHealth = Math.floor(Math.random () * (100 - 60.25 + 1) + 60.25);
+			const cellEnergy = Math.floor(Math.random () * (100 - 60.25 + 1) + 60.25);
+
+
+		const dna = [
+					 ['moveHand', 'outward', Math.floor(Math.random () * (100 - 60.25 + 1) + 60.25)],
+					 ['eat', 'food', Math.floor(Math.random () * (100 - 60.25 + 1) + 60.25)],
+					 ['remove', 'waste', Math.floor(Math.random () * (100 - 60.25 + 1) + 60.25)],
+					 ['repair', 'wall', Math.floor(Math.random () * (100 - 60.25 + 1) + 60.25)],
+					 ['eat', 'food', Math.floor(Math.random () * (100 - 60.25 + 1) + 60.25)],
+					 ['remove', 'waste', Math.floor(Math.random () * (100 - 60.25 + 1) + 60.25)],
+					 ['repair', 'wall', Math.floor(Math.random () * (100 - 60.25 + 1) + 60.25)],
+					 ['moveHand', 'inward', Math.floor(Math.random () * (100 - 60.25 + 1) + 60.25)],
+					 ['moveHand', 'weakLoc', Math.floor(Math.random () * (100 - 60.25 + 1) + 60.25)],
+					 ['read', 'DNASlot', Math.floor(Math.random () * (100 - 60.25 + 1) + 60.25)],
+					 ['write', 'DNASlot', Math.floor(Math.random () * (100 - 60.25 + 1) + 60.25)]
+					]
+
+		const pointerPosStart = Math.floor(Math.random() * (10 - 0 + 1) + 0);
+
+		let handStart = 0;
+
+		if (pointerPosStart <= 7) {
+
+			const handStart = 1;
+
+		}
+
+		let cell = [id, wallHealth, cellEnergy, [[handStart, Math.floor(Math.random() * (10 - 0 + 1) + 0)], pointerPosStart], dna, []];
+
+
+		return cell;
+
+	}
+
+
+// generateCells
+	// generates cells for the game beginning
+	// 
+	// return = food[]
+	function generateCells() {
+
+		// settings variables
+			// number of cells at start
+				const cellCount = 27;
+
+
+		// generate cells
+			// [[id/'dead', wallHealth, cellEnergy, [[0=HandIn/1=HandOut, handPos(0-10)], pointerPos(0-10)], ["DNA"]], ...]
+			let cells = [];
+
+			// for each cell populate cells[]
+				for (let i = 0; i < cellCount; i++) {
+
+					// add new generated cell[] to cells[]
+						cells.push(generateCell(i));
+
+				}
+
+		return cells;
+
+	}
+
+
 // generateInitialGameState
 	// generates the gameDate at the beginning of a game
 	// 
@@ -103,7 +180,7 @@
 	// gameId = gameId of game whoms gameDate is supposed to be generated
 	// gameData = array where the data of all games is stored
 	// dimensions = dimensions of the "canvas" wherefor the game is calculated
-	function generateInitialGameState(gameId, gameData, dimensions) {
+	function generateInitialGameState(gameId, gameData, dimensions, io, socketNicknames) {
 
 		console.log('<generateInitialGameState> generating initial game state for game ' + gameId);
 
@@ -120,8 +197,46 @@
 						// set tick info
 							gameData[i][1] = [Date.now(), 0, 0];
 
-						// set generated food
-							gameData[i][2] = generateFood(dimensions);
+						// set game
+							// set generated food
+								gameData[i][2] = generateFood(dimensions);
+
+							// set generated cells
+								gameData[i][3] = generateCells();
+
+							gameData[i][4] = [];
+
+							gameData[i][5] = [];
+
+
+							// get socks in room
+								io.in(gameId).clients((err, clients) => {
+
+									if (err) {
+										console.error('<error><generateInitialGameState> ' + err);
+									}
+
+
+									// get nicknames from socks in room
+										let players = [];
+
+										// go through socketNicknames[] an check for sock.id (clients[0 or 1]) then take nickname
+											for (let i = 0; i < socketNicknames.length; i++) {
+
+												if (socketNicknames[i][0] == clients[0] || socketNicknames[i][0] == clients[1]) {
+
+													players.push(socketNicknames[i][0]);
+
+												}
+
+											}
+
+
+									const pointsAtGameStart = 100;
+
+									gameData[i][5] = [[players[0], pointsAtGameStart], [players[1], pointsAtGameStart]];
+
+								});
 
 						break;
 
