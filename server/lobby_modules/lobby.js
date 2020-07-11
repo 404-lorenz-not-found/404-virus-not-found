@@ -268,7 +268,7 @@
 
 				io.in(gameId).emit('showGame');
 
-				game.initiateGame(gameId);
+				game.initiateGame(gameId, io, socketNicknames);
 
 				setInterval(game.updateGame, tick, gameId, tick, io);
 

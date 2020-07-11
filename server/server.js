@@ -16,7 +16,7 @@
 		console.log('<server> serving static files from: ' + clientPath);
 
 		// serving static files
-			app.use(express.static(clientPath)); 
+			app.use(express.static(clientPath));
 
 	// set server
 		const server = http.createServer(app);

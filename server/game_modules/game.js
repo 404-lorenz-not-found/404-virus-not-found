@@ -14,6 +14,18 @@
 	//    ticksCalculated
 	//   ]
 	//   ["food"]
+	//   ["cells"]
+	//   ["memory"]
+	//   [
+	//    [
+	//     playerNicknamem
+	//     points
+	//    ]
+	//    [
+	//     playerNicknamem
+	//     points
+	//    ]
+	//   ]
 	//  ]
 	// ]
 	let gameData = [];
@@ -35,8 +47,8 @@
 	// 
 	// Parameters:
 	// gameId = gameId of game wich is supposed to be started
-	function initiateGame(gameId) {
-		generateInitialGameState.generateInitialGameState(gameId, gameData, dimensions);
+	function initiateGame(gameId, io, socketNicknames) {
+		generateInitialGameState.generateInitialGameState(gameId, gameData, dimensions, io, socketNicknames);
 	}
 
 
@@ -106,6 +118,8 @@
 
 				// call each game updater for each part of the game
 					update.updateFood(gameId, gameData, dimensions);
+					update.updateCells(gameId, gameData);
+					update.updatePoints(gameId, gameData);
 
 			}
 
