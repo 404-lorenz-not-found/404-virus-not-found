@@ -38,4 +38,6 @@
 
 
 // on game update
-	sock.on('updateGame', updateGame);
+	sock.on('updateGame', (gameData) => {
+		updateGame(gameData, sock);
+	});

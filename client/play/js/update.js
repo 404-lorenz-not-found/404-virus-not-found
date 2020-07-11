@@ -5,6 +5,7 @@
 // gameData parts for easier access during drawing
 	let food = [];
 	let cells = [];
+	let points = [];
 
 // game Colors
 	const foodColor = '#FF0000';
@@ -12,6 +13,12 @@
 
 	const cellColorNeutral = '#cccccc';
 	const cellColorWall = '#000000';
+	const cellColorDNASlot = '#b3b3b3';
+	const cellColorDNASlotBorder = '#999999';
+	const cellColorDNASlotActive = '#80ff80';
+	const cellColorDNASlotDegradation = '#808080';
+	const DNAText = '#000000';
+	const handColor = '#003300';
 
 	const textColor = '#000000';
 
@@ -105,7 +112,7 @@
 
 					// write extra info below each food[] element (debug) ~ Lorenz
 						// ctx.textAlign = "center";
-						// ctx.fillText(food[i][5], getClientWidth(food[i][0]), getClientHeight(food[i][1]));
+						// ctx.fillText(food[i][4]+', '+food[i][5], getClientWidth(food[i][0]), getClientHeight(food[i][1]));
 
 			}
 
@@ -115,10 +122,7 @@
 	// draws the cells[] of the game
 	function drawCells() {
 
-		ctx.font = '20px Arial';
 		ctx.textBaseline = 'top';
-
-		ctx.beginPath();
 
 		// for each cells[] element
 			for (let i = 0; i < cells.length; i++) {
@@ -127,26 +131,103 @@
 
 					// draws cell
 						// draw cell background
+							ctx.beginPath();
 							ctx.fillStyle = cellColorNeutral;
 							ctx.rect(getClientWidth(cellPositions[i][0]), getClientHeight(cellPositions[i][1]), getClientWidth(180), getClientHeight(180));
 							ctx.fill();
 
-						// draw cell boarder
+						// draw cell border
 							ctx.StrokeStyle = cellColorWall;
 							ctx.lineWidth = cells[i][1]/10;
 							ctx.stroke();
 
+
 						// draw health and energy
 							ctx.fillStyle = textColor;
+							ctx.font = '20px Arial';
 							ctx.beginPath();
 
 							// draw health
 								ctx.textAlign = "start";
-								ctx.fillText(cells[i][1] + ' H', getClientWidth(cellPositions[i][0]+10), getClientHeight(cellPositions[i][1]+10));
+								ctx.fillText(cells[i][1].toFixed(1) + ' H', getClientWidth(cellPositions[i][0]+10), getClientHeight(cellPositions[i][1]+10));
 
 							// draw energy
 								ctx.textAlign = "end";
-								ctx.fillText(cells[i][2] + ' E', getClientWidth(cellPositions[i][0]+180-10), getClientHeight(cellPositions[i][1]+10));
+								ctx.fillText(cells[i][2].toFixed(1) + ' E', getClientWidth(cellPositions[i][0]+180-10), getClientHeight(cellPositions[i][1]+10));
+
+
+						// draw dna
+							for (let DNASlotId = 0; DNASlotId < cells[i][4].length; DNASlotId ++) {
+
+								// draw slots
+									ctx.beginPath();
+
+									// give DNA slot different background if active
+										if (cells[i][3][1] == DNASlotId) {
+
+											ctx.fillStyle = cellColorDNASlotActive;
+
+										} else {
+
+											ctx.fillStyle = cellColorDNASlot;
+
+										}
+
+									ctx.rect(getClientWidth(cellPositions[i][0]+10), getClientHeight(cellPositions[i][1]+10+20+8+12*DNASlotId), getClientWidth(180-10-10-5-12), getClientHeight(12));
+									ctx.fill();
+									ctx.StrokeStyle = cellColorDNASlotBorder;
+									ctx.lineWidth = 1;
+									ctx.stroke();
+
+
+
+									ctx.beginPath();
+									ctx.fillStyle = cellColorDNASlotDegradation;
+									ctx.rect(getClientWidth(cellPositions[i][0]+10), getClientHeight(cellPositions[i][1]+10+20+8+12*DNASlotId), getClientWidth((180-10-10-5-12)*cells[i][4][DNASlotId][2]/100), getClientHeight(12));
+									ctx.fill();
+									ctx.StrokeStyle = cellColorDNASlotDegradation;
+									ctx.lineWidth = 1;
+									ctx.stroke();
+
+
+
+								// draw dna text
+									ctx.beginPath();
+									ctx.textAlign = "start";
+									ctx.font = '12px Arial';
+									ctx.fillStyle = DNAText;
+									ctx.fillText(cells[i][4][DNASlotId][0] + ' : ' + cells[i][4][DNASlotId][1], getClientWidth(cellPositions[i][0]+10), getClientHeight(cellPositions[i][1]+10+20+8+12*DNASlotId));
+
+
+								// draw hand
+									// if current slot is hand position
+										if (cells[i][3][0][1] == DNASlotId) {
+
+											// if hand faces outwards
+												if (cells[i][3][0][0] == 1) {
+
+													ctx.beginPath();
+													ctx.fillStyle = handColor;
+													ctx.rect(getClientWidth(cellPositions[i][0]+180-10-12), getClientHeight(cellPositions[i][1]+10+20+8+12*DNASlotId), getClientWidth(12), getClientHeight(12));
+													ctx.fill();
+
+
+											// if hand faces inwards
+												} else if (cells[i][3][0][0] == 0) {
+
+													ctx.beginPath();
+													ctx.fillStyle = handColor;
+													ctx.moveTo(getClientWidth(cellPositions[i][0]+180-10-12), getClientHeight(cellPositions[i][1]+10+20+8+12*DNASlotId+6));
+													ctx.lineTo(getClientWidth(cellPositions[i][0]+180-10), getClientHeight(cellPositions[i][1]+10+20+8+12*DNASlotId+12));
+													ctx.lineTo(getClientWidth(cellPositions[i][0]+180-10), getClientHeight(cellPositions[i][1]+10+20+8+12*DNASlotId));
+													ctx.closePath();
+													ctx.fill();
+
+												}
+
+										}
+
+							}
 
 				}
 
@@ -189,11 +270,25 @@
 	// 
 	// Parameters:
 	// gameDate = array containing all updated data for this game
-	export function updateGame(gameData) {
+	export function updateGame(gameData, sock) {
 
 		food = gameData[2];
 		cells = gameData[3];
+		points = gameData[5];
+
 
 		document.getElementById('ticksCalculated').innerHTML = gameData[1][2];
+
+		if (points[0][0] == sock.id) {
+
+			document.getElementById('playerInfoPoints').innerHTML = points[0][1];
+			document.getElementById('OpponentPlayerInfoPoints').innerHTML = points[1][1];
+
+		} else {
+
+			document.getElementById('OpponentPlayerInfoPoints').innerHTML = points[0][1];
+			document.getElementById('playerInfoPoints').innerHTML = points[1][1];
+
+		}
 
 	}
